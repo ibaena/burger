@@ -1,19 +1,23 @@
-var mysql = require("mysql");
+var mysql = require('mysql');
 
-// First you need to create a connection to the db
-var conn = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "@pril2488",
-  database: "burgers_db"
-});
+function Connection() {
+  this.pool = null;
 
-conn.connect(function(err,res){
-  if(err){
-    console.log('Error connecting to Db');
-    return;
-  }
-  console.log('Data received from Db:\n');
-});
+  this.init = function() {
+    this.pool = mysql.createPool({
+      connectionLimit: 10,
+      host: 'localhost',
+      user: 'root',
+      password: '@pril2488',
+      database: 'burgers_db'
+    });
+  };
 
-module.exports = conn;
+  this.acquire = function(callback) {
+    this.pool.getConnection(function(err, connection) {
+      callback(err, connection);
+    });
+  };
+}
+
+module.exports = new Connection();
