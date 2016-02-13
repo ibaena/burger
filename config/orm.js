@@ -3,12 +3,11 @@ var mysql = require("mysql");
 var connection = require("./connection.js");
 
 function burger() {
-  //Select all data from Burges Table and show in terminal
+  //Select all data from Burges Table and show in termina
   this.get = function(res) {
    connection.acquire(function(err, con) {
      con.query('select * from Burgers', function(err, result) {
        con.release();
-       res.send(result);
      });
    });
  };
@@ -20,7 +19,7 @@ function burger() {
        if (err) {
          res.send({status: 1, message: 'Burger creation failed'});
        } else {
-         res.send({status: 0, message: 'Burger created successfully'});
+         console.log('{status: 0, message:Burger created successfully}');
        }
      });
    });

@@ -20,8 +20,7 @@ app.use(bodyParser.json());                                     // parse applica
 
 
 connection.init();
-routes.configure(app);
+app.use('/', routes);
 // listen (start app with node server.js)
-var server = app.listen(8000, function() {
-  console.log('Server listening on port ' + server.address().port);
-});
+var port = Number(process.env.PORT || 8080);
+app.listen(port);

@@ -4,23 +4,24 @@ var burger = require('../config/orm.js');
 
 // middleware that is specific to this router
 
-module.exports = {
-  configure: function(app) {
-    app.get('/burger/', function(req, res) {
-      burger.get(res);
-      console.log('Hey Ivan');
-    });
 
-    app.post('/burger/', function(req, res) {
+    router.get('/burger/', function(req, res) {
+        burger.get(res);
+      res.render('index', {
+           title : 'Eat Da Burger!',
+           layout : 'main'
+    });
+    });
+    router.post('/burger/', function(req, res) {
       burger.create(req.body, res);
+      console.log(req.body);
     });
 
-    app.put('/burger/', function(req, res) {
+    router.put('/burger/', function(req, res) {
       burger.update(req.body, res);
     });
 
-    app.delete('/burger/:id/', function(req, res) {
+    router.delete('/burger/:id/', function(req, res) {
       burger.delete(req.params.id, res);
     });
-  }
-};
+module.exports = router;
