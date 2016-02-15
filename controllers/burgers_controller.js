@@ -1,26 +1,36 @@
 var express = require('express');
 var router = express.Router();
-var burger = require('../config/orm.js');
+var burger = require('../models/burger.js');
 
-// middleware that is specific to this router
-
-
-router.get('/burger/', function(req, res) {
-  res.render('index', {
-    title: 'Eat Da Burger!',
-    layout: 'main'
-  });
-});
-router.post('/burger/', function(req, res) {
-  burger.create(req.body, res);
-  console.log(req.body);
+//get route -> index
+router.get('/index', function(req,res) {
+	super_clubs.findAllMembers(function(super_clubs_data){
+		res.render('index', {super_clubs_data});
+	});
 });
 
-router.put('/burger/', function(req, res) {
-  burger.update(req.body, res);
+//post route -> back to index
+router.post('/create', function(req, res) {
+	super_clubs.addOneMemeber(req.body.member_name, function(result){
+		console.log(result);
+		res.redirect('/index');
+	});
 });
 
-router.delete('/burger/:id/', function(req, res) {
-  burger.delete(req.params.id, res);
+//put route -> back to index
+router.put('/update', function(req,res){
+	super_clubs.updateOneMember(req.body.member_id, function(result){
+		console.log(result);
+		res.redirect('/index');
+	});
 });
+
+//delete route -> back to index
+router.delete('/delete', function(req,res){
+	super_clubs.removeOneMember(req.body.member_id, function(result){
+		console.log(result);
+		res.redirect('/index');
+	});
+});
+
 module.exports = router;
