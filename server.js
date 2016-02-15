@@ -18,9 +18,12 @@ app.use(morgan('dev'));                                         // log every req
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
 
-
-connection.init();
+var routes = require('./controllers/burgers_controller.js');
 app.use('/', routes);
+app.use('/create', routes);
+app.use('/update', routes);
+app.use('/delete', routes);
+
 // listen (start app with node server.js)
 var port = Number(process.env.PORT || 8080);
 app.listen(port);
